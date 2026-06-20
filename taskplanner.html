@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <!--
   WIEDERVERWENDBARE BAUSTEINE IN DIESER APP
-  (Suche nach "BAUSTEIN:" im Code fuer Details zu jedem)
+  (Suche nach "BAUSTEIN:" im Code für Details zu jedem)
 
   1. localDateStr() / today()      -- Zeitzonen-sicheres Datum statt UTC
   2. boot-fallback (HTML-Block am Seitenanfang)  -- sichtbarer Ladebildschirm + Fehleranzeige
   3. load()                        -- defensives, typsicheres localStorage-Laden
   4. taskOn()                      -- flexible Wiederholungs-Engine (6 Rhythmen)
-  5. aging()                       -- Aging-Balken/Ampelfarbe fuer wartende Eintraege
+  5. aging()                       -- Aging-Balken/Ampelfarbe für wartende Eintraege
   6. openSmartLink()               -- App-URI mit Web-Fallback (Spotify etc.)
   7. urgencyScore()/autoQuadrant() -- Eisenhower Auto-Scoring (Wichtig x Dringend)
   8. alarmGentle() & co.           -- synthetisierte, rechtefreie Alarmtoene
   9. openTimer()                   -- Timer mit Media-Session-Sperrbildschirm-Anzeige
   10. runLayoutCheck()             -- Mobile-Layout-Ueberlauf-Diagnose + Fix-Button
 
-  Beim Hochladen dieser Datei in einem neuen Chat: "uebernimm Baustein X
-  aus dieser App" genuegt, der Kommentar am Funktionsanfang erklaert
+  Beim Hochladen dieser Datei in einem neuen Chat: "übernimm Baustein X
+  aus dieser App" genügt, der Kommentar am Funktionsanfang erklaert
   Zweck und Kontext.
 -->
 <html lang="de">
@@ -362,21 +362,21 @@ main { flex: 1; padding: 12px; padding-top: 62px; max-width: 600px; width: 100%;
 </head>
 <body>
 <!-- BAUSTEIN: Boot-Fallback gegen "schwarze Seite"
-     Problem: Wenn JS-Init fehlschlaegt (kaputte localStorage-Daten,
+     Problem: Wenn JS-Init fehlschlägt (kaputte localStorage-Daten,
      unerwarteter Fehler), zeigt Safari oft nur eine leere/schwarze
-     Seite ohne jeden Hinweis. Loesung: reines HTML/CSS ohne JS-
-     Abhaengigkeit, das von Anfang an sichtbar ist und sich NUR
+     Seite ohne jeden Hinweis. Lösung: reines HTML/CSS ohne JS-
+     Abhängigkeit, das von Anfang an sichtbar ist und sich NUR
      entfernt, wenn die Init-Funktionen erfolgreich durchlaufen
      (siehe Init-Block am Ende vom Script-Bereich). Zeigt im Fehlerfall den
-     exakten JS-Fehlertext inkl. Zeilennummer. Wiederverwendbar fuer
+     exakten JS-Fehlertext inkl. Zeilennummer. Wiederverwendbar für
      jede App mit clientseitigem State-Loading (localStorage/IndexedDB),
-     wo ein stiller Fehler sonst nur als leere Seite sichtbar waere. -->
+     wo ein stiller Fehler sonst nur als leere Seite sichtbar wäre. -->
 <div id="boot-fallback" style="position:fixed;inset:0;background:#0a0e1a;color:#f1f5f9;font-family:system-ui,sans-serif;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;z-index:9999;">
   <div>
-    <div style="font-size:18px;font-weight:700;margin-bottom:8px;">DayFlow laedt...</div>
+    <div style="font-size:18px;font-weight:700;margin-bottom:8px;">DayFlow lädt...</div>
     <div style="font-size:13px;color:#94a3b8;">Falls diese Meldung stehen bleibt, ist ein Fehler aufgetreten.</div>
     <div id="boot-error" style="font-size:11px;color:#ef4444;margin-top:12px;font-family:monospace;text-align:left;background:#111827;padding:10px;border-radius:8px;max-width:90vw;overflow:auto;display:none;"></div>
-    <button onclick="try{localStorage.removeItem('dayflow2');}catch(e){};location.reload();" style="margin-top:16px;padding:10px 20px;border-radius:8px;border:1px solid #3b82f6;background:rgba(59,130,246,.15);color:#3b82f6;font:600 13px system-ui;cursor:pointer;">Daten zuruecksetzen &amp; neu laden</button>
+    <button onclick="try{localStorage.removeItem('dayflow2');}catch(e){};location.reload();" style="margin-top:16px;padding:10px 20px;border-radius:8px;border:1px solid #3b82f6;background:rgba(59,130,246,.15);color:#3b82f6;font:600 13px system-ui;cursor:pointer;">Daten zurücksetzen &amp; neu laden</button>
   </div>
 </div>
 
@@ -387,7 +387,7 @@ main { flex: 1; padding: 12px; padding-top: 62px; max-width: 600px; width: 100%;
       <div class="modal-title">Link-Bibliothek</div>
       <button class="modal-x" onclick="closeOverlay('ov-linklib')">&#10005;</button>
     </div>
-    <div style="font-size:12px;color:var(--tx2);margin-bottom:14px;">Lege wiederkehrende Links an &mdash; z.B. Uebungsvideos, Playlists, Webseiten. Bei einer Aufgabe kannst du sie dann direkt auswaehlen.</div>
+    <div style="font-size:12px;color:var(--tx2);margin-bottom:14px;">Lege wiederkehrende Links an &mdash; z.B. Uebungsvideos, Playlists, Webseiten. Bei einer Aufgabe kannst du sie dann direkt auswählen.</div>
 
     <div class="frow">
       <div class="field">
@@ -408,7 +408,7 @@ main { flex: 1; padding: 12px; padding-top: 62px; max-width: 600px; width: 100%;
       <label>URL</label>
       <input type="url" id="ll-url" placeholder="https://...">
     </div>
-    <button class="btn-primary" onclick="addLinkLibraryEntry()">Hinzufuegen</button>
+    <button class="btn-primary" onclick="addLinkLibraryEntry()">Hinzufügen</button>
 
     <div id="ll-list" style="margin-top:18px;"></div>
   </div>
@@ -434,7 +434,7 @@ main { flex: 1; padding: 12px; padding-top: 62px; max-width: 600px; width: 100%;
     </div>
     <div class="timer-controls">
       <button class="timer-btn-main timer-btn-start" id="timer-start-btn" onclick="timerToggle()">&#9654; Start</button>
-      <button class="timer-btn-reset" onclick="timerReset()" title="Zuruecksetzen">&#8635;</button>
+      <button class="timer-btn-reset" onclick="timerReset()" title="Zurücksetzen">&#8635;</button>
     </div>
     <div class="timer-state-msg" id="timer-msg"></div>
   </div>
@@ -792,17 +792,17 @@ main { flex: 1; padding: 12px; padding-top: 62px; max-width: 600px; width: 100%;
     </div>
     <div class="sett-box">
       <div class="sett-box-title">Backup wiederherstellen</div>
-      <div class="sett-box-sub">Gespeicherte Datei laden. Aktuelle Daten werden ueberschrieben.</div>
-      <button class="btn-outline" onclick="importData()">Backup-Datei oeffnen...</button>
+      <div class="sett-box-sub">Gespeicherte Datei laden. Aktuelle Daten werden überschrieben.</div>
+      <button class="btn-outline" onclick="importData()">Backup-Datei öffnen...</button>
     </div>
     <div class="sett-box">
       <div class="sett-box-title">Cluster verwalten</div>
       <div class="sett-box-sub">Cluster anlegen, bearbeiten, Farben anpassen.</div>
-      <button class="btn-outline" onclick="closeOverlay('ov-settings');showView('clusters');">Cluster oeffnen</button>
+      <button class="btn-outline" onclick="closeOverlay('ov-settings');showView('clusters');">Cluster öffnen</button>
     </div>
     <div class="sett-box">
       <div class="sett-box-title">Alarm-Melodie</div>
-      <div class="sett-box-sub">Klicke zum Vorhoren, dann auswaehlen.</div>
+      <div class="sett-box-sub">Klicke zum Anhören, dann auswählen.</div>
       <div id="alarm-picker" style="display:flex;flex-direction:column;gap:6px;"></div>
     </div>
     <div class="sett-box" style="margin-top:0;">
@@ -811,15 +811,15 @@ main { flex: 1; padding: 12px; padding-top: 62px; max-width: 600px; width: 100%;
       <button class="btn-outline" onclick="closeOverlay('ov-settings');openLinkLibrary();">Links verwalten</button>
     </div>
     <div class="sett-box">
-      <div class="sett-box-title">Layout-Pruefung</div>
-      <div class="sett-box-sub">Prueft, ob Elemente ueber den Bildschirmrand hinausragen.</div>
-      <button class="btn-outline" onclick="runLayoutCheck()">Breite pruefen</button>
+      <div class="sett-box-title">Layout-Prüfung</div>
+      <div class="sett-box-sub">Prüft, ob Elemente über den Bildschirmrand hinausragen.</div>
+      <button class="btn-outline" onclick="runLayoutCheck()">Breite prüfen</button>
       <div id="layout-check-result" style="font-size:11px;margin-top:8px;"></div>
     </div>
     <div class="sett-box">
       <div class="sett-box-title">Funktionsdokumentation</div>
-      <div class="sett-box-sub">Liste aller wiederverwendbaren Bausteine zum Kopieren fuer neue Projekte.</div>
-      <button class="btn-outline" onclick="closeOverlay('ov-settings');openFuncDocs();">Dokumentation oeffnen</button>
+      <div class="sett-box-sub">Liste aller wiederverwendbaren Bausteine zum Kopieren für neue Projekte.</div>
+      <button class="btn-outline" onclick="closeOverlay('ov-settings');openFuncDocs();">Dokumentation öffnen</button>
     </div>
     <div id="sett-stats" style="font-size:12px;color:var(--tx3);margin-top:12px;padding-top:12px;border-top:1px solid var(--border);"></div>
   </div>
@@ -832,7 +832,7 @@ main { flex: 1; padding: 12px; padding-top: 62px; max-width: 600px; width: 100%;
       <div class="modal-title">Funktionsdokumentation</div>
       <button class="modal-x" onclick="closeOverlay('ov-funcdocs')">&#10005;</button>
     </div>
-    <div style="font-size:11px;color:var(--tx3);margin-bottom:14px;">Antippen kopiert den Funktionsnamen. Im naechsten Chat einfach einfuegen: "Uebernimm Baustein [Name] aus dieser App".</div>
+    <div style="font-size:11px;color:var(--tx3);margin-bottom:14px;">Antippen kopiert den Funktionsnamen. Im nächsten Chat einfach einfügen: "Uebernimm Baustein [Name] aus dieser App".</div>
     <div id="funcdocs-list"></div>
   </div>
 </div>
@@ -2132,13 +2132,32 @@ var ALARM_STYLES = {
   harp:    { fn: alarmHarp,    label: 'Harfen-Arpeggio' }
 };
 
+// Spielt die gewaehlte Alarm-Melodie 3x nacheinander mit kurzer Pause,
+// damit der Hinweis auch bei kurzer Unaufmerksamkeit sicher wahrgenommen
+// wird, statt nur einmal kurz zu klingen.
+function playAlarmRepeated(ctx, style) {
+  var melody = ALARM_STYLES[style] || ALARM_STYLES.gentle;
+  var GAP = 0.4; // Pause zwischen Wiederholungen in Sekunden
+  // Grobe Schaetzung der Melodiedauer anhand des Stilnamens, da jede
+  // alarm*() Funktion ihre eigene Notenliste mit individueller Laenge hat.
+  var DURATIONS = { gentle: 1.9, bell: 2.6, marimba: 1.6, pulse: 1.6, harp: 1.5 };
+  var duration = DURATIONS[style] || 2.0;
+  for (var i = 0; i < 3; i++) {
+    (function(rep){
+      setTimeout(function(){
+        try { melody.fn(ctx); } catch(e) {}
+      }, rep * (duration + GAP) * 1000);
+    })(i);
+  }
+}
+
 function beep() {
   try {
     var ctx = getAudioCtx();
     if (!ctx) return;
     if (ctx.state === 'suspended') { ctx.resume(); }
     var style = (state.alarmStyle && ALARM_STYLES[state.alarmStyle]) ? state.alarmStyle : 'gentle';
-    ALARM_STYLES[style].fn(ctx);
+    playAlarmRepeated(ctx, style);
   } catch(e) {}
 }
 
@@ -2352,7 +2371,7 @@ function renderAlarmPicker() {
 
     var preview = document.createElement('button');
     preview.style.cssText = 'padding:3px 9px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--tx2);font:12px var(--font);cursor:pointer;flex-shrink:0;';
-    preview.textContent = 'Vorhoren';
+    preview.textContent = 'Anhören';
     preview.addEventListener('click', (function(k){ return function(e) {
       e.stopPropagation();
       previewAlarm(k);
@@ -3042,7 +3061,7 @@ setTimeout(function(){
         <div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:8px;padding:8px;font-size:11px;"><strong style="color:#f59e0b;">&#128236; Delegieren</strong><br>Nicht wichtig, dringend</div>
         <div style="background:rgba(71,85,105,0.08);border:1px solid rgba(71,85,105,0.3);border-radius:8px;padding:8px;font-size:11px;"><strong style="color:#475569;">&#128465; Eliminieren</strong><br>Weder noch</div>
       </div>
-      <p style="margin-top:10px;font-size:11px;color:var(--tx3);">Du kannst jede automatische Einordnung manuell ueberschreiben &mdash; tippe auf eine Aufgabe in der Matrix.</p>
+      <p style="margin-top:10px;font-size:11px;color:var(--tx3);">Du kannst jede automatische Einordnung manuell überschreiben &mdash; tippe auf eine Aufgabe in der Matrix.</p>
     </div>
   </div>
 </div>
