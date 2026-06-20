@@ -4,7 +4,7 @@
   (Suche nach "BAUSTEIN:" im Code fuer Details zu jedem)
 
   1. localDateStr() / today()      -- Zeitzonen-sicheres Datum statt UTC
-  2. boot-fallback (HTML, <body>)  -- sichtbarer Ladebildschirm + Fehleranzeige
+  2. boot-fallback (HTML-Block am Seitenanfang)  -- sichtbarer Ladebildschirm + Fehleranzeige
   3. load()                        -- defensives, typsicheres localStorage-Laden
   4. taskOn()                      -- flexible Wiederholungs-Engine (6 Rhythmen)
   5. aging()                       -- Aging-Balken/Ampelfarbe fuer wartende Eintraege
@@ -23,6 +23,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DayFlow</title>
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAMAAAAKE/YAAAAAYFBMVEXvbB37t3L3hjImGQ5PMBfSejL/yE7/sEeIUCOjVyITDgtTLRMTDgr+w3r0jjkWFRB3RyCBNw63hlQAVQCUWCYRDAkXEQ0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAphB4ZAAAAGHRSTlP+6/7hrWVHToT9nv5a6VsZjf/xA3/+/gDlZzK/AAAFcUlEQVR42u3d6XrqOAwGYAUDIc5GOyP3/u90sgFZvMSO7VjzoH9t0/BG57MCLaeGP221LeeciZjVPWDV6lWgE1dcnFS80sEhQfEL3tqizxZP/bZBVyKRkrMh1S7r2Ft0lZS5q8qMrkRyxU1oLlKsSotO07xWQ+LRkEYEaJiXaiBiXtwgP+hWJF6VBM0FGTXQMQvRrtAVAbNgS3QrSBSfo1tGAz3FGsgEeqwZmox5bDWQWYWzVgOtRo+tBlKJnoY1kBl3s1bTQ/MBzQS1VgO1RvetBlLzblqKQGx2jGhy6ehCDX/00BzopUMImuiKIppRRAc78/XBkBia3e735iqQEJo98vvzmd9vYdhB0CN3oD8YBTSK6+0VDOxCkj/9NxsCkPP3Euw/zP1nxCsakT0GMs6uos/K/DOJobEP8RY4Xkia6C4KjXRcjJHxGW3wGmaFTHk9p6JfYdYn5+Er2n7Q8jCvLms+Vk5Ho9h175sP8LPRFpbh6hoPGYHDYVb9q6MM1+XIw/iDo+tPsb5QFEW5/Xz3Hc3x8XcEPd5MZMlALIvL5VIwDDL+4EiYGy25r0L2ZfOsCYTW3EyQvci9Wp6Rx6HxB85hVtxMujBfFtU1Gz2PP3APs3T9fZIxY0ujfeCFDfgMs5CR+yoV48/xhQ2ECvOq2SUqZrzL+APrMN/2hnlPRtxe2IB9mB+7w7xZkYpo244/sErGMzdOZp1aN/4wEFo5pjRh3sGeFkkQNIom/1f6zEjsJGui3eQ3i2TboG/3q2syDOMPr+HQ+QZtTZZnJCp6d5gNcyQiGrGAi1NBsWx2NLRLMlQZiYU2krPMyI6MNo+5rK+90Y6EZtrIjmQjm8VGg6nLL7X6QEgGDZCtSslOBg2XbFsAyaBhXd1nZOSh2dLDU0Bvk7Fgp4m+ZLVanSWB3pINtb3K09HZjvKGxt01oqcPPKGnM4/o3WWFvodD379oV3TdFTF0Xf8Wxe+anTa6zsr+oHI1uJNG19n4sgRxqU4bXeLw0z6GJRl0/fu+T+BvTQVdfNDFF/2Nx/9gIdIceSRvLjRv4zSfMKX51FT4QIsvWo3GEGg8C21mb78jAXTHrq1+xJQGGmzanAxaxVYcnApaxr5A8ujND/XURyaEXjZbd1xsNAPYw9YfxWJ3ugQDuzaay9id7n9fa2q2/utFOTtZJLQws01kER091I+r+Wd1ophoZKVTmzfAqGiXjKySEQG9PrV9tEvJmQOim/wp/4pFtEu57Zk3YdA4vcVUUnujXZTSbgzvncMw6PebedEt2rIw4/t/FYRCf96uiA7R/lE2wo5sje4y0r9d0SHaJZMno4+crcEaPUUb7aItDzPahtkd7RDt0iprQdDah5Ow5WNOc+lh0DbRLoRlyMKh90ZbEWamvuag6F3R9jfmPKHN0ZaPORze737kcQ+h9dH2O+Y8oq0XlPOY84q2CujRMHtDWzzjOTLmfKN35vR6aMz5R++YCF7C7BltiuvT+Z4dEq2NtocxFwittNm/NImJlkbb05gLiN4SfY25kOhVGDyHORh6JvU55kKjp2gfeGlyCrqPdh4gzGHR/d888HTPjolGwYKdGjjSqy86GrqiZ2bQ0kNzaOnlo4I/evloCaJ5h/6HXDr6vz9NLdTj31Qnlo4RzYilY0CTGtXstU8ApVa3L3RLq9HT3heMVKNfW6MQGh2fTWgqSo1+75xD4w5TLfcoagmZP7tBEQgIbzf7biWvZrJt2TiJRbjeAI+TCPR6q0FOw7za1DHZXC+3K13tRJmomuv3/Kx4+mbJlrA86TirNt+t0m6zaptjnuoK1G8ozRMma7buTmBFqjbB1m2Sfi5bKTbs7N7H5BQ4M2xI/x/pOSo+1X+r9QAAAABJRU5ErkJggg==">
 <style>
 :root {
   --bg: #0a0e1a;
@@ -43,7 +44,7 @@
   --red: #ef4444;
   --font: system-ui, -apple-system, sans-serif;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; max-width: 100%; }
+* { box-sizing: border-box; margin: 0; padding: 0; max-width: 100%; overflow-wrap: break-word; }
 select, input, textarea { min-width: 0; }
 html {
   overflow-x: hidden;
@@ -119,7 +120,7 @@ main { flex: 1; padding: 12px; padding-top: 62px; max-width: 600px; width: 100%;
   box-shadow: 0 0 0 3px rgba(16,185,129,0.18);
 }
 .tc-body { flex: 1; min-width: 0; }
-.tc-title { font-size: 13px; font-weight: 500; }
+.tc-title { font-size: 13px; font-weight: 500; word-break: break-word; overflow-wrap: break-word; }
 .tc-meta { display: flex; align-items: center; gap: 6px; margin-top: 3px; flex-wrap: wrap; }
 .tc-badge { font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 20px; }
 .tc-pill { font-size: 10px; color: var(--tx3); }
@@ -466,12 +467,12 @@ main { flex: 1; padding: 12px; padding-top: 62px; max-width: 600px; width: 100%;
   <main>
     <!-- TODAY -->
     <div id="view-today" class="view active">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;margin-top:8px;">
-        <div>
-          <div id="lbl-date" style="font-size:24px;font-weight:700;letter-spacing:-.3px;"></div>
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;margin-top:8px;gap:8px;flex-wrap:wrap;">
+        <div style="min-width:0;flex:1;">
+          <div id="lbl-date" style="font-size:22px;font-weight:700;letter-spacing:-.3px;line-height:1.2;"></div>
           <div id="lbl-sub" style="font-size:12px;color:var(--tx2);margin-top:2px;"></div>
         </div>
-        <button class="tc-btn" id="budget-btn" onclick="toggleBudget()">&#8987; Budget</button>
+        <button class="tc-btn" id="budget-btn" onclick="toggleBudget()" style="flex-shrink:0;">&#8987; Budget</button>
       </div>
       <div class="card" style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
         <div id="lbl-done" style="font-size:22px;font-weight:700;color:var(--blue2);"></div>
@@ -1171,6 +1172,10 @@ function makeChip(task, dateStr) {
   acts.className = 'tc-actions';
 
   if (task.backlog) {
+    // Backlog-Karten: nur U-Badge + Einplanen-Button. Timer und Stift
+    // entfallen hier bewusst -- die ganze Karte ist klickbar zum
+    // Bearbeiten, und ein Timer ohne Termin ist wenig sinnvoll.
+    // Verhindert, dass 4 Action-Elemente in einer Reihe um Platz kaempfen.
     var ubadge = document.createElement('div');
     ubadge.className = 'u-badge';
     ubadge.textContent = 'U';
@@ -1184,44 +1189,44 @@ function makeChip(task, dateStr) {
       planTask(task.id);
     });
     acts.appendChild(pb);
-  }
+  } else {
+    if (!done) {
+      var timerBtn = document.createElement('button');
+      timerBtn.className = 'tc-timer-btn';
+      timerBtn.innerHTML = '\u23F1';
+      timerBtn.title = task.budget ? ('Timer starten (' + task.budget + ' min)') : 'Timer starten';
+      timerBtn.addEventListener('click', function(e){
+        e.stopPropagation();
+        openTimer(task.id);
+      });
+      acts.appendChild(timerBtn);
+    }
 
-  if (!done) {
-    var timerBtn = document.createElement('button');
-    timerBtn.className = 'tc-timer-btn';
-    timerBtn.innerHTML = '\u23F1';
-    timerBtn.title = task.budget ? ('Timer starten (' + task.budget + ' min)') : 'Timer starten';
-    timerBtn.addEventListener('click', function(e){
+    if (task.link) {
+      var lm = linkMeta(task.link);
+      var la = document.createElement('button');
+      la.className = 'link-chip';
+      la.style.border = 'none';
+      la.style.cursor = 'pointer';
+      la.style.background = hexA(lm.color,0.15);
+      la.style.color = lm.color;
+      la.textContent = lm.label;
+      la.addEventListener('click', function(e){
+        e.stopPropagation();
+        openSmartLink(task.link);
+      });
+      acts.appendChild(la);
+    }
+
+    var eb = document.createElement('button');
+    eb.className = 'tc-edit';
+    eb.textContent = '\u270F';
+    eb.addEventListener('click', function(e){
       e.stopPropagation();
-      openTimer(task.id);
+      openEditTask(task.id);
     });
-    acts.appendChild(timerBtn);
+    acts.appendChild(eb);
   }
-
-  if (task.link) {
-    var lm = linkMeta(task.link);
-    var la = document.createElement('button');
-    la.className = 'link-chip';
-    la.style.border = 'none';
-    la.style.cursor = 'pointer';
-    la.style.background = hexA(lm.color,0.15);
-    la.style.color = lm.color;
-    la.textContent = lm.label;
-    la.addEventListener('click', function(e){
-      e.stopPropagation();
-      openSmartLink(task.link);
-    });
-    acts.appendChild(la);
-  }
-
-  var eb = document.createElement('button');
-  eb.className = 'tc-edit';
-  eb.textContent = '\u270F';
-  eb.addEventListener('click', function(e){
-    e.stopPropagation();
-    openEditTask(task.id);
-  });
-  acts.appendChild(eb);
   div.appendChild(acts);
 
   if (ag) {
@@ -2143,7 +2148,7 @@ function openSettings() {
 // selbst statt in einem externen, schwer wiederzufindenden System.
 var FUNC_DOCS = [
   { name: 'localDateStr() / today()', desc: 'Zeitzonen-sicheres Datum statt UTC. Verhindert falsches "heute" bei abweichender Geraete-Zeitzone.' },
-  { name: 'boot-fallback (HTML-Block in <body>)', desc: 'Sichtbarer Ladebildschirm mit Fehleranzeige statt schwarzer Seite bei JS-Fehlern.' },
+  { name: 'boot-fallback (HTML-Block am Seitenanfang)', desc: 'Sichtbarer Ladebildschirm mit Fehleranzeige statt schwarzer Seite bei JS-Fehlern.' },
   { name: 'load()', desc: 'Defensives, typsicheres localStorage-Laden. Validiert jedes Feld einzeln, reset bei korrupten Daten statt Absturz.' },
   { name: 'taskOn()', desc: 'Flexible Wiederholungs-Engine: taeglich, Werktage, einzelne Wochentage, woechentlich, alle X Tage, Zyklus (X an / Y Pause).' },
   { name: 'aging()', desc: 'Logarithmischer Aging-Balken + Ampelfarbe fuer wartende Eintraege. Macht Vernachlaessigung sofort sichtbar.' },
@@ -2210,7 +2215,26 @@ function runLayoutCheck() {
     all.forEach(function(el){
       try {
         var rect = el.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) return; // not rendered, ignore
+
         if (rect.right > vw + 2 || rect.left < -2) {
+          // Skip false positives: if any ancestor clips overflow (overflow:hidden/scroll/auto),
+          // the visual overflow is already contained even though getBoundingClientRect()
+          // still reports the element's raw (unclipped) box.
+          var clipped = false;
+          var p = el.parentElement;
+          while (p && p !== document.body) {
+            var cs = window.getComputedStyle(p);
+            if (cs.overflow === 'hidden' || cs.overflowX === 'hidden' ||
+                cs.overflow === 'auto'   || cs.overflowX === 'auto'   ||
+                cs.overflow === 'scroll' || cs.overflowX === 'scroll') {
+              var pr = p.getBoundingClientRect();
+              if (pr.right <= vw + 2 && pr.left >= -2) { clipped = true; break; }
+            }
+            p = p.parentElement;
+          }
+          if (clipped) return;
+
           var label = el.className && typeof el.className === 'string'
             ? el.className.split(' ')[0]
             : el.tagName.toLowerCase();
@@ -2229,10 +2253,10 @@ function runLayoutCheck() {
     }
 
     if (!overflowing.length) {
-      html += '<div style="color:var(--green);">\u2713 Kein Element ragt heraus (' + vw + 'px Bildschirmbreite).</div>';
+      html += '<div style="color:var(--green);">\u2713 Kein sichtbares Element ragt heraus (' + vw + 'px Bildschirmbreite).</div>';
     } else {
       var unique = overflowing.filter(function(v,i,a){return a.indexOf(v)===i;}).slice(0,5);
-      html += '<div style="color:var(--red);">\u26A0 ' + overflowing.length + ' Element(e) ragen heraus:<br>' + unique.join('<br>') + '</div>';
+      html += '<div style="color:var(--red);">\u26A0 ' + overflowing.length + ' Element(e) ragen sichtbar heraus:<br>' + unique.join('<br>') + '</div>';
     }
     resultEl.innerHTML = html;
   }, 150);
