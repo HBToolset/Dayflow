@@ -21,7 +21,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>DayFlow</title>
 <link rel="apple-touch-icon" href="data:image/png;base64,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">
 <style>
@@ -72,14 +72,15 @@ body::before {
 /* Header */
 header {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 8px 12px; border-bottom: 1px solid var(--border);
+  padding: 8px 10px; border-bottom: 1px solid var(--border);
   background: rgba(10,14,26,0.98); position: fixed; top: 0; left: 0; right: 0; z-index: 500;
-  width: 100%; max-width: 100%; box-sizing: border-box; overflow: hidden;
+  width: 100%; max-width: 100%; box-sizing: border-box; overflow: hidden; gap: 6px;
 }
 .logo { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; flex-shrink: 0; }
-.logo-icon { width: 26px; height: 26px; background: linear-gradient(135deg,#1d4ed8,#3b82f6); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 12px; }
-nav { display: flex; gap: 1px; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-nav button { padding: 5px 9px; border-radius: 6px; border: none; background: transparent; color: var(--tx2); font: 500 11px var(--font); cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+.logo-text { white-space: nowrap; }
+.logo-icon { width: 26px; height: 26px; background: linear-gradient(135deg,#1d4ed8,#3b82f6); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+nav { display: flex; gap: 1px; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; flex: 1; min-width: 0; }
+nav button { padding: 5px 8px; border-radius: 6px; border: none; background: transparent; color: var(--tx2); font: 500 11px var(--font); cursor: pointer; white-space: nowrap; flex-shrink: 0; }
 nav button.active { background: var(--blueglow); color: var(--blue2); }
 .hbtn { width: 28px; height: 28px; border-radius: 7px; border: 1px solid var(--border); background: var(--card); color: var(--tx2); cursor: pointer; font-size: 12px; flex-shrink: 0; }
 
@@ -167,7 +168,7 @@ main { flex: 1; padding: 12px; padding-top: 62px; max-width: 600px; width: 100%;
 .field label { display: block; font-size: 11px; font-weight: 600; color: var(--tx2); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 5px; }
 .field input, .field select, .field textarea {
   width: 100%; background: var(--input); border: 1px solid var(--border);
-  border-radius: 8px; color: var(--tx); font: 14px var(--font); padding: 9px 11px; outline: none;
+  border-radius: 8px; color: var(--tx); font: 16px var(--font); padding: 9px 11px; outline: none;
 }
 .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--blue2); }
 .field select option { background: var(--card); }
@@ -453,7 +454,7 @@ main { flex: 1; padding: 12px; padding-top: 62px; max-width: 600px; width: 100%;
   <header>
     <div class="logo">
       <div class="logo-icon">D</div>
-      <span>Day<span style="color:var(--blue2)">Flow</span></span>
+      <span class="logo-text">Day<span style="color:var(--blue2)">Flow</span></span>
     </div>
     <nav id="nav">
       <button class="active" onclick="showView('today')">Heute</button>
@@ -1258,14 +1259,29 @@ function renderToday() {
   var body = document.getElementById('today-body');
   body.innerHTML = '';
 
-  // Backlog strip
+  // Backlog: nur als kompakter Hinweis, NICHT als volle Kartenliste.
+  // Grund: viele unverplante Aufgaben (mit langen Namen, U-Badge,
+  // Einplanen-Button) koennen die Heute-Ansicht in der Breite sprengen.
+  // Volle Liste gibt es stattdessen unter "Alle".
   var bl = state.tasks.filter(function(t){return t.backlog && !isDone(t,td);});
   if (bl.length) {
-    var hdr = document.createElement('div');
-    hdr.className = 'sec-hdr';
-    hdr.innerHTML = 'Unverplant <span class="sec-count">'+bl.length+'</span><hr>';
-    body.appendChild(hdr);
-    bl.forEach(function(t){ body.appendChild(makeChip(t,td)); });
+    var blBanner = document.createElement('div');
+    blBanner.style.cssText = 'display:flex;align-items:center;gap:10px;background:var(--card);border:1px dashed var(--border2);border-radius:10px;padding:10px 12px;margin-bottom:16px;cursor:pointer;';
+    blBanner.addEventListener('click', function(){ showView('tasks'); });
+    var blDot = document.createElement('div');
+    blDot.className = 'u-badge';
+    blDot.textContent = 'U';
+    blDot.style.flexShrink = '0';
+    var blText = document.createElement('div');
+    blText.style.cssText = 'flex:1;font-size:12px;color:var(--tx2);';
+    blText.innerHTML = '<strong style="color:var(--tx);">' + bl.length + ' unverplante Aufgabe' + (bl.length!==1?'n':'') + '</strong> &mdash; in "Alle" ansehen';
+    var blArrow = document.createElement('div');
+    blArrow.style.cssText = 'color:var(--tx3);font-size:14px;flex-shrink:0;';
+    blArrow.innerHTML = '&#8594;';
+    blBanner.appendChild(blDot);
+    blBanner.appendChild(blText);
+    blBanner.appendChild(blArrow);
+    body.appendChild(blBanner);
   }
 
   // No-time planned
@@ -1670,13 +1686,23 @@ function showView(v) {
   } catch(e) {
     toast('Anzeigefehler', 'Diese Ansicht konnte nicht geladen werden.');
   }
-  // Reset any horizontal drift that may have crept in
-  try {
-    document.documentElement.scrollLeft = 0;
-    document.body.scrollLeft = 0;
-    var nav = document.getElementById('nav');
-    if (nav) nav.scrollLeft = 0;
-  } catch(e) {}
+  // Reset any horizontal drift that may have crept in.
+  // Deferred via requestAnimationFrame so it runs AFTER the browser
+  // has actually painted the new view -- an immediate reset can get
+  // overridden if the layout itself shifts slightly during rendering
+  // (e.g. when switching to a view with many dynamically-sized cards).
+  function resetScroll() {
+    try {
+      window.scrollTo(0, window.scrollY || 0);
+      document.documentElement.scrollLeft = 0;
+      document.body.scrollLeft = 0;
+      var nav = document.getElementById('nav');
+      if (nav) nav.scrollLeft = 0;
+    } catch(e) {}
+  }
+  resetScroll();
+  requestAnimationFrame(resetScroll);
+  setTimeout(resetScroll, 100);
 }
 function render() {
   var active = document.querySelector('.view.active');
@@ -1689,6 +1715,15 @@ function openOverlay(id) { document.getElementById(id).classList.add('open'); }
 function closeOverlay(id) {
   document.getElementById(id).classList.remove('open');
   stopMic();
+  // Hard reset: iOS Safari can drift the page horizontally when an
+  // input field inside a modal gets focused (keyboard opening). This
+  // ensures every modal close leaves the page at a clean position,
+  // regardless of what caused any drift while it was open.
+  try {
+    window.scrollTo(0, window.scrollY || 0);
+    document.documentElement.scrollLeft = 0;
+    document.body.scrollLeft = 0;
+  } catch(e) {}
 }
 document.querySelectorAll('.overlay').forEach(function(o){
   o.addEventListener('click',function(e){
@@ -1836,13 +1871,30 @@ function saveTask() {
   } else {
     state.tasks.push(task);
   }
-  save(); closeOverlay('ov-task'); render(); scheduleNotifs();
+  save(); render(); closeOverlay('ov-task'); scheduleNotifs();
+  // Extra delayed reset: closing the on-screen keyboard on iOS animates
+  // over ~300ms and can shift the page AFTER our normal resets already
+  // ran. This catches that case specifically.
+  setTimeout(function(){
+    try {
+      window.scrollTo(0, window.scrollY || 0);
+      document.documentElement.scrollLeft = 0;
+      document.body.scrollLeft = 0;
+    } catch(e) {}
+  }, 350);
 }
 
 function deleteTask() {
   if (!editTaskId) return;
   state.tasks = state.tasks.filter(function(t){return t.id!==editTaskId;});
-  save(); closeOverlay('ov-task'); render();
+  save(); render(); closeOverlay('ov-task');
+  setTimeout(function(){
+    try {
+      window.scrollTo(0, window.scrollY || 0);
+      document.documentElement.scrollLeft = 0;
+      document.body.scrollLeft = 0;
+    } catch(e) {}
+  }, 350);
 }
 
 function planTask(id) {
@@ -2886,6 +2938,44 @@ try {
 setInterval(function(){
   try { scheduleNotifs(); } catch(e) {}
 }, 60000);
+
+// BAUSTEIN: Kontinuierlicher Scroll-Wachhund gegen horizontales Wegrutschen
+// Problem: iOS Safari kann die Seite horizontal verschieben, wenn ein
+// Eingabefeld in einem Modal fokussiert wird (Tastatur oeffnet sich) --
+// besonders bei fixed-position Headern. Punktuelle Resets (z.B. nur
+// beim Modal-Schliessen) reichen nicht, weil die Verschiebung auch
+// WAEHREND der Eingabe auftreten kann. Loesung: globaler scroll-Listener,
+// der jede horizontale Verschiebung sofort (im naechsten Frame) auf 0
+// zuruecksetzt. Vertikales Scrollen bleibt davon unberuehrt.
+// Wiederverwendbar fuer jede mobile Web-App mit fixed-position Headern
+// und Texteingabe in Modals.
+(function(){
+  var resetting = false;
+  function killHorizontalDrift() {
+    if (resetting) return;
+    var x = window.scrollX || document.documentElement.scrollLeft || document.body.scrollLeft || 0;
+    if (x !== 0) {
+      resetting = true;
+      requestAnimationFrame(function(){
+        try {
+          document.documentElement.scrollLeft = 0;
+          document.body.scrollLeft = 0;
+        } catch(e) {}
+        resetting = false;
+      });
+    }
+  }
+  window.addEventListener('scroll', killHorizontalDrift, {passive: true});
+  function watchAfterFocusChange() {
+    // Check repeatedly over ~1s to cover the iOS keyboard show/hide
+    // animation, which can shift the page well after the event fires.
+    [50, 150, 300, 500, 800].forEach(function(delay){
+      setTimeout(killHorizontalDrift, delay);
+    });
+  }
+  document.addEventListener('focusin', watchAfterFocusChange);
+  document.addEventListener('focusout', watchAfterFocusChange);
+})();
 
 // Show error if init failed, otherwise remove the boot fallback overlay
 try {
