@@ -2418,7 +2418,11 @@ function importData() {
         if (!data.tasks||!data.clusters) throw new Error();
         state.tasks = data.tasks;
         state.clusters = data.clusters;
-        state.showBudget = data.showBudget||false;
+        state.showBudget = !!data.showBudget;
+        state.alarmStyle = (typeof data.alarmStyle === 'string') ? data.alarmStyle : 'gentle';
+        state.linkLibrary = Array.isArray(data.linkLibrary) ? data.linkLibrary.filter(function(l){
+          return l && typeof l === 'object' && typeof l.id === 'string' && typeof l.url === 'string';
+        }) : [];
         save(); render(); closeOverlay('ov-settings');
         toast('Wiederhergestellt', data.tasks.length+' Aufgaben geladen.');
       } catch(err) {
