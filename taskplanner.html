@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- DayFlow v20260623-114020 -->
 <!--
   WIEDERVERWENDBARE BAUSTEINE IN DIESER APP
   (Suche nach "BAUSTEIN:" im Code für Details zu jedem)
@@ -194,7 +195,7 @@ main { flex: 1; padding: 12px; padding-top: 62px; max-width: 600px; width: 100%;
 .link-chip { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 5px; text-decoration: none; }
 
 /* Week */
-.wk-grid { display: grid; grid-template-columns: 40px repeat(7,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; font-size: 10px; }
+.wk-grid { display: grid; grid-template-columns: 40px repeat(7,minmax(78px,1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; font-size: 10px; }
 .wk-hdr { background: var(--panel); padding: 8px 4px; text-align: center; color: var(--tx2); font-weight: 600; }
 .wk-hdr.today { color: var(--blue2); }
 .wk-time { background: var(--panel); padding: 6px 3px; text-align: right; color: var(--tx3); }
@@ -300,10 +301,11 @@ main { flex: 1; padding: 12px; padding-top: 62px; max-width: 600px; width: 100%;
 .ctrl-mini-val { font-size: 22px; font-weight: 800; color: var(--blue2); }
 .ctrl-mini-lbl { font-size: 10px; color: var(--tx3); margin-top: 2px; text-transform: uppercase; letter-spacing: .5px; }
 .ctrl-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-.ctrl-bar-label { font-size: 12px; color: var(--tx2); min-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.ctrl-bar-track { flex: 1; height: 8px; background: var(--input); border-radius: 4px; overflow: hidden; }
+.ctrl-bar-label { font-size: 12px; color: var(--tx2); width: 90px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ctrl-bar-track { flex: 1; height: 8px; background: var(--input); border-radius: 4px; overflow: hidden; min-width: 0; }
 .ctrl-bar-fill { height: 100%; border-radius: 4px; transition: width .5s ease; }
-.ctrl-bar-pct { font-size: 11px; font-weight: 700; min-width: 36px; text-align: right; }
+.ctrl-bar-pct { font-size: 11px; font-weight: 700; width: 36px; flex-shrink: 0; text-align: right; }
+.ctrl-bar-info { font-size: 10px; color: var(--tx3); width: 60px; flex-shrink: 0; text-align: right; }
 .ctrl-ampel { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 .ctrl-task-row { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--border); }
 .ctrl-task-row:last-child { border-bottom: none; }
@@ -499,9 +501,18 @@ main { flex: 1; padding: 12px; padding-top: 62px; max-width: 600px; width: 100%;
 
     <!-- ALL -->
     <div id="view-tasks" class="view">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
         <div style="font-size:18px;font-weight:700;">Alle Aufgaben</div>
-        <select id="filter-cl" onchange="renderTasks()" style="background:var(--card);border:1px solid var(--border);color:var(--tx);border-radius:8px;padding:5px 10px;font:12px var(--font);cursor:pointer;"></select>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <select id="done-range" onchange="renderTasks()" style="background:var(--card);border:1px solid var(--border);color:var(--tx);border-radius:8px;padding:5px 8px;font:12px var(--font);cursor:pointer;">
+            <option value="open">Offen</option>
+            <option value="today">+ Heute erledigt</option>
+            <option value="week" selected>+ Letzte Woche</option>
+            <option value="month">+ Letzter Monat</option>
+            <option value="all">+ Alle erledigt</option>
+          </select>
+          <select id="filter-cl" onchange="renderTasks()" style="background:var(--card);border:1px solid var(--border);color:var(--tx);border-radius:8px;padding:5px 10px;font:12px var(--font);cursor:pointer;"></select>
+        </div>
       </div>
       <div id="tasks-body"></div>
     </div>
@@ -510,7 +521,7 @@ main { flex: 1; padding: 12px; padding-top: 62px; max-width: 600px; width: 100%;
     <div id="view-clusters" class="view">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
         <div style="font-size:18px;font-weight:700;">Cluster</div>
-        <button class="tc-btn" onclick="openAddCluster()">+ Cluster</button>
+        <button class="btn-blue-out" onclick="openAddCluster()" style="width:auto;padding:8px 16px;font-size:13px;">+ Neuer Cluster</button>
       </div>
       <div class="cl-grid" id="cl-grid"></div>
     </div>
@@ -713,6 +724,15 @@ main { flex: 1; padding: 12px; padding-top: 62px; max-width: 600px; width: 100%;
       </div>
     </div>
     <div class="field"><label>Notiz</label><textarea id="f-notes" placeholder="Optional..."></textarea></div>
+    <div class="field">
+      <label>Feedback / Warten auf Antwort</label>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <input type="checkbox" id="f-feedback" onchange="toggleFeedbackField()" style="width:18px;height:18px;flex-shrink:0;">
+        <span style="font-size:13px;color:var(--tx2);">Nach Erledigung in</span>
+        <input type="number" id="f-feedback-days" placeholder="7" min="1" max="90" style="width:60px;display:none;">
+        <span id="f-feedback-suffix" style="font-size:13px;color:var(--tx2);display:none;">Tagen erinnern</span>
+      </div>
+    </div>
     <button class="btn-primary" onclick="saveTask()">Speichern</button>
     <button class="btn-del" id="task-del-btn" style="display:none;" onclick="deleteTask()">Aufgabe loeschen</button>
   </div>
@@ -862,6 +882,17 @@ var notifTimers = [];
 
 // -- Persist -------------------------------------------
 function save() {
+  // Automatisches Ausduennen der doneOn-Historie vor dem Speichern.
+  // Wiederholungsaufgaben behalten nur die letzten 90 Tage (reicht fuer
+  // alle Controlling-Auswertungen 7T/30T/90T), Einmalaufgaben behalten
+  // ihren Eintrag dauerhaft (noetig fuer "erledigt"-Erkennung).
+  var cutoff = localDateStr(new Date(new Date().getTime() - 90*24*60*60*1000));
+  state.tasks.forEach(function(t) {
+    if (!t.doneOn || !t.doneOn.length) return;
+    if (t.recur && t.recur !== 'none') {
+      t.doneOn = t.doneOn.filter(function(d){ return d >= cutoff; });
+    }
+  });
   try { localStorage.setItem('dayflow2', JSON.stringify(state)); } catch(e) {}
 }
 // BAUSTEIN: Defensives localStorage-Laden
@@ -987,13 +1018,55 @@ function taskOn(t, d) {
   }
   return false;
 }
-function isDone(t, d) { return (t.doneOn||[]).indexOf(d) >= 0; }
+function isDone(t, d) {
+  if (!t.doneOn || !t.doneOn.length) return false;
+  // Recurring tasks: only done if completed on this specific date
+  if (t.recur && t.recur !== 'none') return t.doneOn.indexOf(d) >= 0;
+  // One-time tasks: permanently done once any doneOn entry exists
+  return t.doneOn.length > 0;
+}
 function toggleDone(taskId, d) {
   var t = state.tasks.find(function(x){return x.id===taskId;});
   if (!t) return;
   if (!t.doneOn) t.doneOn = [];
   var i = t.doneOn.indexOf(d);
-  if (i >= 0) t.doneOn.splice(i,1); else t.doneOn.push(d);
+  var wasDone = i >= 0;
+  if (wasDone) {
+    t.doneOn.splice(i,1);
+  } else {
+    t.doneOn.push(d);
+    // Feedback-Erinnerung: wenn gesetzt, neue Folgeaufgabe mit Delay anlegen
+    if (t.feedbackDays && t.recur === 'none') {
+      var followDate = new Date(d+'T00:00');
+      followDate.setDate(followDate.getDate() + t.feedbackDays);
+      var followTask = {
+        id: uid(),
+        title: 'Feedback: ' + t.title,
+        cluster: t.cluster,
+        budget: null,
+        backlog: false,
+        backlogSince: null,
+        date: localDateStr(followDate),
+        time: t.time || '08:00',
+        recur: 'none',
+        weekdays: [],
+        everyN: null,
+        cycleOn: null,
+        cycleOff: null,
+        enddate: null,
+        notify: t.notify || 'none',
+        link: null,
+        deadline: null,
+        importance: t.importance || 0,
+        notes: 'Feedback-Erinnerung fuer: ' + t.title,
+        feedbackDays: null,
+        doneOn: [],
+        eisenhower: null
+      };
+      state.tasks.push(followTask);
+      toast('Erinnerung angelegt', 'Feedback-Aufgabe am ' + followTask.date + ' erstellt.');
+    }
+  }
   save(); render();
 }
 
@@ -1342,6 +1415,76 @@ function renderToday() {
 }
 
 // -- Render Week ---------------------------------------
+// Tagesansicht fuer beliebiges Datum aus der Wochensicht heraus
+function openDayView(dateStr) {
+  var overlay = document.getElementById('ov-dayview');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'ov-dayview';
+    overlay.className = 'overlay';
+    overlay.style.cssText = 'display:none;position:fixed;inset:0;background:var(--bg);z-index:600;overflow-y:auto;padding:12px;padding-top:70px;';
+    overlay.innerHTML =
+      '<div style="position:fixed;top:0;left:0;right:0;z-index:610;background:rgba(10,14,26,0.98);border-bottom:1px solid var(--border);padding:8px 12px;display:flex;align-items:center;gap:10px;">' +
+        '<button onclick="closeDayView()" style="background:var(--card);border:1px solid var(--border2);color:var(--tx);border-radius:8px;padding:6px 12px;font:600 13px var(--font);cursor:pointer;">&#8592; Woche</button>' +
+        '<div id="dayview-title" style="font-size:16px;font-weight:700;flex:1;"></div>' +
+      '</div>' +
+      '<div id="dayview-body"></div>';
+    document.getElementById('app').appendChild(overlay);
+  }
+
+  document.getElementById('dayview-title').textContent = fmtDate(dateStr);
+  overlay.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+
+  // Render timeline for this specific date
+  var body = document.getElementById('dayview-body');
+  body.innerHTML = '';
+  var dayTasks = state.tasks.filter(function(t){ return taskOn(t, dateStr) && !t.backlog; });
+  var isDoneDay = function(t){ return isDone(t, dateStr); };
+
+  // Create timeline same as renderToday but for dateStr
+  var hours = [];
+  for (var h = 0; h < 24; h++) hours.push(h);
+  var timed = dayTasks.filter(function(t){ return !!t.time; });
+  var noTime = dayTasks.filter(function(t){ return !t.time; });
+
+  if (noTime.length) {
+    var noHdr = document.createElement('div');
+    noHdr.className = 'sec-hdr';
+    noHdr.innerHTML = 'Ohne Uhrzeit<hr>';
+    body.appendChild(noHdr);
+    noTime.forEach(function(t){ body.appendChild(makeChip(t, dateStr)); });
+  }
+
+  var tl = document.createElement('div');
+  tl.className = 'timeline';
+  hours.forEach(function(h){
+    var slot = document.createElement('div');
+    slot.className = 'tl-slot';
+    var timeEl = document.createElement('div');
+    timeEl.className = 'tl-time';
+    timeEl.textContent = h+':00';
+    var line = document.createElement('div');
+    line.className = 'tl-line';
+    var tasks = document.createElement('div');
+    tasks.className = 'tl-tasks';
+    var hTasks = timed.filter(function(t){ return parseInt(t.time)==h; });
+    hTasks.forEach(function(t){ tasks.appendChild(makeChip(t, dateStr)); });
+    slot.appendChild(timeEl);
+    slot.appendChild(line);
+    slot.appendChild(tasks);
+    tl.appendChild(slot);
+  });
+  body.appendChild(tl);
+}
+
+function closeDayView() {
+  var overlay = document.getElementById('ov-dayview');
+  if (overlay) overlay.style.display = 'none';
+  document.body.style.overflow = '';
+  showView('week');
+}
+
 function renderWeek() {
   var now = new Date();
   var dow = now.getDay();
@@ -1374,8 +1517,13 @@ function renderWeek() {
 
   var body = document.getElementById('week-body');
   body.innerHTML = '';
+  // Scrollable wrapper so all 7 days fit even on narrow screens
+  var scrollWrap = document.createElement('div');
+  scrollWrap.style.cssText = 'overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -12px;padding:0 12px;';
   var grid = document.createElement('div');
   grid.className = 'wk-grid';
+  // 40px time column + 7 day columns with minimum 52px each (7*52+40 = 404px, fits fine, scrollable if needed)
+  grid.style.minWidth = '586px'; // 40px time + 7*78px = 586px, 50% wider columns
 
   // Header row
   var corner = document.createElement('div');
@@ -1385,6 +1533,9 @@ function renderWeek() {
     var cell = document.createElement('div');
     cell.className = 'wk-hdr'+(d===td?' today':'');
     cell.innerHTML = dnames[i]+'<br><strong>'+d.slice(8)+'</strong>';
+    cell.style.cursor = 'pointer';
+    cell.title = 'Tippen fuer Tagesansicht';
+    cell.addEventListener('click', function(){ openDayView(d); });
     grid.appendChild(cell);
   });
 
@@ -1415,7 +1566,8 @@ function renderWeek() {
     });
   });
 
-  body.appendChild(grid);
+  scrollWrap.appendChild(grid);
+  body.appendChild(scrollWrap);
 }
 
 // -- Render All Tasks ----------------------------------
@@ -1433,13 +1585,61 @@ function fillFilterSelect() {
 function renderTasks() {
   fillFilterSelect();
   var filter = document.getElementById('filter-cl').value;
-
+  var range = (document.getElementById('done-range') || {value:'week'}).value;
   var td = today();
   var body = document.getElementById('tasks-body');
   body.innerHTML = '';
-  var filtered = state.tasks.filter(function(t){return !filter||t.cluster===filter;});
+
+  // Determine cutoff date for done tasks based on selected range
+  var cutoff = null;
+  if (range === 'today') {
+    cutoff = td;
+  } else if (range === 'week') {
+    var w = new Date(td+'T00:00'); w.setDate(w.getDate()-6); cutoff = localDateStr(w);
+  } else if (range === 'month') {
+    var m = new Date(td+'T00:00'); m.setDate(m.getDate()-29); cutoff = localDateStr(m);
+  }
+
+  // isTaskDone: for recurring tasks check today, for one-time tasks check ever
+  function isTaskDone(t) {
+    if (!t.doneOn || !t.doneOn.length) return false;
+    if (t.recur && t.recur !== 'none') return isDone(t, td); // recurring: today only
+    return t.doneOn.length > 0; // one-time: ever done
+  }
+
+  // Get the most recent doneOn date for a task
+  function lastDoneDate(t) {
+    if (!t.doneOn || !t.doneOn.length) return null;
+    return t.doneOn.slice().sort().pop();
+  }
+
+  var filtered = state.tasks.filter(function(t){
+    if (filter && t.cluster !== filter) return false;
+    var done = isTaskDone(t);
+    if (range === 'open') return !done;
+    if (range === 'all') return true;
+    // For today/week/month: show open tasks + done tasks within cutoff
+    if (!done) return true;
+    var last = lastDoneDate(t);
+    if (!last) return false;
+    if (range === 'today') return last === td;
+    return last >= cutoff;
+  });
+
+  // Sort: open first, done after; within done: most recent first
+  filtered.sort(function(a,b){
+    var da = isTaskDone(a), db = isTaskDone(b);
+    if (da && !db) return 1;
+    if (!da && db) return -1;
+    if (da && db) {
+      var la = lastDoneDate(a)||'', lb = lastDoneDate(b)||'';
+      return lb.localeCompare(la); // most recent done first
+    }
+    return 0;
+  });
+
   if (!filtered.length) {
-    body.innerHTML = '<div style="text-align:center;padding:40px;color:var(--tx3);">Keine Aufgaben. Tippe + zum Hinzufuegen.</div>';
+    body.innerHTML = '<div style="text-align:center;padding:40px;color:var(--tx3);">Keine Aufgaben in diesem Zeitraum.</div>';
     return;
   }
   var planned = filtered.filter(function(t){return !t.backlog;});
@@ -1744,6 +1944,10 @@ function openAddTask() {
   document.getElementById('f-notify').value = 'none';
   document.getElementById('f-link').value = '';
   document.getElementById('f-notes').value = '';
+  document.getElementById('f-feedback').checked = false;
+  document.getElementById('f-feedback-days').value = '';
+  document.getElementById('f-feedback-days').style.display = 'none';
+  document.getElementById('f-feedback-suffix').style.display = 'none';
   document.getElementById('f-deadline').value = '';
   document.getElementById('f-importance').value = '0';
   document.getElementById('f-backlog').checked = false;
@@ -1777,6 +1981,11 @@ function openEditTask(id) {
   document.getElementById('f-notify').value = t.notify||'none';
   document.getElementById('f-link').value = t.link||'';
   document.getElementById('f-notes').value = t.notes||'';
+  var hasFb = !!t.feedbackDays;
+  document.getElementById('f-feedback').checked = hasFb;
+  document.getElementById('f-feedback-days').value = hasFb ? t.feedbackDays : '';
+  document.getElementById('f-feedback-days').style.display = hasFb ? '' : 'none';
+  document.getElementById('f-feedback-suffix').style.display = hasFb ? '' : 'none';
   document.getElementById('f-deadline').value = t.deadline||'';
   document.getElementById('f-importance').value = t.importance||'0';
   document.getElementById('f-backlog').checked = !!t.backlog;
@@ -1807,6 +2016,15 @@ function fillClusterSelect(sel) {
     if (c.id===sel) o.selected = true;
     el.appendChild(o);
   });
+}
+
+function toggleFeedbackField() {
+  var checked = document.getElementById('f-feedback').checked;
+  var daysEl = document.getElementById('f-feedback-days');
+  var suffix = document.getElementById('f-feedback-suffix');
+  daysEl.style.display = checked ? '' : 'none';
+  suffix.style.display = checked ? '' : 'none';
+  if (checked && !daysEl.value) daysEl.value = '7';
 }
 
 function toggleBacklog() {
@@ -1862,6 +2080,7 @@ function saveTask() {
     deadline: document.getElementById('f-deadline').value||null,
     importance: parseInt(document.getElementById('f-importance').value)||0,
     notes: document.getElementById('f-notes').value,
+    feedbackDays: document.getElementById('f-feedback').checked ? (parseInt(document.getElementById('f-feedback-days').value)||7) : null,
     doneOn: existing?(existing.doneOn||[]):[],
     eisenhower: existing?existing.eisenhower:undefined
   };
@@ -2371,7 +2590,7 @@ function renderAlarmPicker() {
 
     var preview = document.createElement('button');
     preview.style.cssText = 'padding:3px 9px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--tx2);font:12px var(--font);cursor:pointer;flex-shrink:0;';
-    preview.textContent = 'Anhören';
+    preview.textContent = 'Anh\u00f6ren';
     preview.addEventListener('click', (function(k){ return function(e) {
       e.stopPropagation();
       previewAlarm(k);
@@ -2527,7 +2746,7 @@ function renderControl() {
       + '<div class="ctrl-bar-label">'+cl.icon+' '+cl.name+'</div>'
       + '<div class="ctrl-bar-track"><div class="ctrl-bar-fill" style="width:'+(pct||0)+'%;background:'+color+'"></div></div>'
       + '<div class="ctrl-bar-pct" style="color:'+color+'">'+(pct!==null?pct+'%':'--')+'</div>'
-      + '<div style="font-size:10px;color:var(--tx3);">'+open+' offen'+(bl?' | '+bl+'U':'')+'</div>';
+      + '<div class="ctrl-bar-info">'+open+' offen'+(bl?' | '+bl+'U':'')+'</div>';
     clWrap.appendChild(row);
   });
 
